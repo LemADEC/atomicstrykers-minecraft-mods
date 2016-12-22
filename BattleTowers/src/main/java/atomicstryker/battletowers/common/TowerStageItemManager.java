@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
 
 public class TowerStageItemManager
@@ -42,7 +43,7 @@ public class TowerStageItemManager
 			
 			if (settings.length < 5 && !settings[0].startsWith("ChestGenHook:"))
 			{
-			    System.err.println("Battletowers skipping invalid entry ["+elements[i].trim()+"], fix config file!");
+				FMLLog.getLogger().error("Battletowers skipping invalid entry ["+elements[i].trim()+"], fix config file!");
 			}
 			else
 			{
@@ -64,13 +65,13 @@ public class TowerStageItemManager
 	            
 	            if (itemID[i] != null)
                 {
-	                System.out.println("Battletowers parsed Item/Block/ChestGenHook "+itemID[i]);
+	            	FMLLog.getLogger().info("Battletowers parsed Item/Block/ChestGenHook "+itemID[i]);
                 }
 	            else
 	            {
-	                System.out.println("Battletowers failed parsing or finding Item/Block "+settings[0]);
+	            	FMLLog.getLogger().info("Battletowers failed parsing or finding Item/Block "+settings[0]);
 	            }
-	            //System.out.println("Name of that Item: "+Item.itemsList[itemID[i]].getItemName());
+	            //FMLLog.getLogger().info("Name of that Item: "+Item.itemsList[itemID[i]].getItemName());
 			}
 		}
 		
@@ -147,15 +148,15 @@ public class TowerStageItemManager
 		{
             if (itemID[curIndex] instanceof Item)
             {
-                //System.out.println("Stashed item "+item.getUnlocalizedName()+" of id "+itemID[curIndex]);
+                //FMLLog.getLogger().info("Stashed item "+item.getUnlocalizedName()+" of id "+itemID[curIndex]);
                 result = new ItemStack((Item)itemID[curIndex], minAmount[curIndex]+rand.nextInt(maxAmount[curIndex]), itemDamage[curIndex]);
-                //System.out.println("Stashed new damaged ItemStack, id "+itemID[curIndex]+", "+result.getItemName()+" in a BT chest.");
+                //FMLLog.getLogger().info("Stashed new damaged ItemStack, id "+itemID[curIndex]+", "+result.getItemName()+" in a BT chest.");
             }
             else if (itemID[curIndex] instanceof Block)
             {
-                //System.out.println("Stashed block "+block.getLocalizedName()+" of id "+itemID[curIndex]);
+                //FMLLog.getLogger().info("Stashed block "+block.getLocalizedName()+" of id "+itemID[curIndex]);
                 result = new ItemStack((Block)itemID[curIndex], minAmount[curIndex]+rand.nextInt(maxAmount[curIndex]), itemDamage[curIndex]);
-                //System.out.println("Stashed new damaged Block Stack, id "+itemID[curIndex]+", "+result.getItemName()+" in a BT chest.");
+                //FMLLog.getLogger().info("Stashed new damaged Block Stack, id "+itemID[curIndex]+", "+result.getItemName()+" in a BT chest.");
             }
             else if (itemID[curIndex] instanceof String) // ChestGenHook:strongholdLibrary:5
             {

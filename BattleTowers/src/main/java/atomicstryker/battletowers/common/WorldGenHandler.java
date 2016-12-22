@@ -24,6 +24,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.WorldEvent;
 import atomicstryker.battletowers.common.AS_WorldGenTower.TowerTypes;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -59,6 +60,13 @@ public class WorldGenHandler implements IWorldGenerator
     public void eventWorldSave(WorldEvent.Save evt)
     {
         flushCurrentPosListToFile(evt.world);
+    }
+
+    @SubscribeEvent
+    public void eventWorldUnload(WorldEvent.Unload evt)
+    {
+        flushCurrentPosListToFile(evt.world);
+        lastWorld = null;
     }
     
     @Override
@@ -125,12 +133,12 @@ public class WorldGenHandler implements IWorldGenerator
                 pos.y = y;
                 if (attemptToSpawnTower(world, pos, random, xActual, y, zActual))
                 {
-                    //System.out.println("Battle Tower spawned at [ "+xActual+" | "+zActual+" ]");
+                    //FMLLog.getLogger().info("Battle Tower spawned at [ "+xActual+" | "+zActual+" ]");
                 }
                 else
                 {
                     // spawn failed, bugger
-                    System.out.printf("Tower Site [%d|%d] rejected: %s\n", pos.x, pos.z, generator.failState);
+                	// FMLLog.getLogger().info(String.format("Tower Site [%d|%d] rejected: %s", pos.x, pos.z, generator.failState));
                     towerPositions.remove(pos);
                 }
             }
@@ -209,11 +217,11 @@ public class WorldGenHandler implements IWorldGenerator
                 mindist = Math.min(mindist, dist);
                 if (dist < AS_BattleTowersCore.instance.minDistanceBetweenTowers)
                 {
-                    //System.out.printf("refusing site coords [%d,%d], mindist %f\n", xActual, zActual, mindist);
+                	// FMLLog.getLogger().error(String.format("refusing site coords [%d,%d], mindist %f", xActual, zActual, mindist));
                     return null;
                 }
             }
-            System.out.printf("Logged %d towers so far, accepted new site coords [%d,%d], mindist %f\n", towerPositions.size(), xActual, zActual, mindist);
+            // FMLLog.getLogger().info(String.format("Logged %d towers so far, accepted new site coords [%d,%d], mindist %f", towerPositions.size(), xActual, zActual, mindist));
         }
         
         return new TowerPosition(xActual, 0, zActual, 0, false);
@@ -300,7 +308,7 @@ public class WorldGenHandler implements IWorldGenerator
                     }
                     catch (Exception e)
                     {
-                        System.err.println("Battletowers positions file is invalid in line "+lineNumber+", skipping...");
+                    	FMLLog.getLogger().error("Battletowers positions file is invalid in line "+lineNumber+", skipping...");
                     }
                 }
                 
@@ -308,7 +316,7 @@ public class WorldGenHandler implements IWorldGenerator
                 line = br.readLine();
             }
             br.close();
-            System.out.println("Battletower Positions reloaded. Lines "+lineNumber+", entries "+towerPositions.size());
+            FMLLog.getLogger().info("Battletower Positions reloaded. Lines "+lineNumber+", entries "+towerPositions.size());
         }
         catch (Exception e)
         {

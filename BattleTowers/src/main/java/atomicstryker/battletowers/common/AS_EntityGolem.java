@@ -21,6 +21,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 
 public class AS_EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
@@ -290,7 +291,7 @@ public class AS_EntityGolem extends EntityMob implements IEntityAdditionalSpawnD
 			|| (targetNearby && ((this.posY - getEntityToAttack().posY) > 0.3D)))
             {
                 rageCounter-=2;
-                //System.out.println("Golem losing patience: "+rageCounter);
+                //FMLLog.getLogger().info("Golem losing patience: "+rageCounter);
             }
 			else
             {

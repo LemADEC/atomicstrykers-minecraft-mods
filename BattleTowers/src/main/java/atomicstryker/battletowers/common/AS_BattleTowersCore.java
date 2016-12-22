@@ -12,6 +12,7 @@ import atomicstryker.battletowers.common.network.ChestAttackedPacket;
 import atomicstryker.battletowers.common.network.LoginPacket;
 import atomicstryker.battletowers.common.network.NetworkHelper;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -68,7 +69,7 @@ public class AS_BattleTowersCore
     @SubscribeEvent
     public void onClientConnected(ClientConnectedToServerEvent event)
     {
-        System.out.println(FMLCommonHandler.instance().getEffectiveSide()+" registered ClientConnectedToServerEvent, sending packet to server");
+    	//FMLLog.getLogger().info(FMLCommonHandler.instance().getEffectiveSide()+" registered ClientConnectedToServerEvent, sending packet to server");
         networkHelper.sendPacketToServer(new LoginPacket());
     }
     

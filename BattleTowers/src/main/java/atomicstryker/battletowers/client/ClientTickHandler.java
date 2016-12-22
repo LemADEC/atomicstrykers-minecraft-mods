@@ -13,6 +13,7 @@ import atomicstryker.battletowers.common.AS_BattleTowersCore;
 import atomicstryker.battletowers.common.AS_EntityGolem;
 import atomicstryker.battletowers.common.network.ChestAttackedPacket;
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -81,7 +82,7 @@ public class ClientTickHandler
                             }
                             catch (Exception e)
                             {
-                                System.err.println("Tell AtomicStryker to update his BattleTowers Block Break Progress Hack because: " + e);
+                                FMLLog.getLogger().error("Tell AtomicStryker to update his BattleTowers Block Break Progress Hack because: " + e);
                                 hackFailed = true;
                                 e.printStackTrace();
                             }
