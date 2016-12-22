@@ -111,10 +111,8 @@ public class RuinTemplateRule
                 {
                     if (isNumber(data[0])) // torch-5
                     {
-                        debugPrinter.println("Rule [" + rule + "] in template " + owner.getName()+" still uses numeric blockIDs! ERROR!");
-                        blockIDs[i] = Blocks.air;
-                        blockMDs[i] = 0;
-                        blockStrings[i] = "";
+                        // debugPrinter.println("Rule [" + rule + "] in template " + owner.getName()+" still uses numeric blockIDs! ERROR!");
+                        blockIDs[i] = Block.getBlockById(Integer.parseInt(data[0]));
                     }
                     else
                     // planks-3 or ChestGenHook:strongholdLibrary:5-2
@@ -167,10 +165,8 @@ public class RuinTemplateRule
                 {
                     if (isNumber(blockRules[i + 2]))
                     {
-                        debugPrinter.println("Rule [" + rule + "] in template " + owner.getName()+" still uses numeric blockIDs! ERROR!");
-                        blockIDs[i] = Blocks.air;
-                        blockMDs[i] = 0;
-                        blockStrings[i] = "";
+                        // debugPrinter.println("Rule [" + rule + "] in template " + owner.getName()+" still uses numeric blockIDs! ERROR!");
+                        blockIDs[i] = Block.getBlockById(Integer.parseInt(blockRules[i + 2]));
                     }
                     else
                     {
@@ -393,7 +389,7 @@ public class RuinTemplateRule
         Block blockID = blockIDs[blocknum];
         if (excessiveDebugging)
         {
-            debugPrinter.println("About to place blockID "+blockID+", meta "+blockMDs[blocknum]+" rotation "+rotate+", string: "+blockString);
+            debugPrinter.print("About to place blockID "+blockID+", meta "+blockMDs[blocknum]+" rotation "+rotate+", string: "+blockString);
         }
         if (blockID == null)
         {
